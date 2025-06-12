@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Edu+SA+Hand:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+SA+Hand:wght@400..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Edu+SA+Hand:wght@400..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --bg-color: white;
+  --text-color: #0a0a0a;
+}
+
+/* /* data-theme="dark", html:ssä se aktivoi kyseisen lohkon ja asettaa ne muuttujat käyttöön. / */
+[data-theme="dark"] {
+  --bg-color: #0a0a0a;
+  --text-color: #eee;
+}
+
+[data-theme="light"] {
+  --bg-color: white;
+  --text-color: #0a0a0a;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: "Edu SA Hand", cursive;
+  /* font-family: "Alumni Sans SC", sans-serif; */
+}

@@ -2,8 +2,7 @@
 import React, { createContext, useState, ReactNode, useContext } from "react";
 
 type User = {
-  name: string;
-  email: string;
+  username: string;
   id: number;
 } | null;
 

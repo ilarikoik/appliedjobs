@@ -25,26 +25,28 @@ export default function LoginPage() {
     });
 
     const data = await res.json();
-    setMessage(data.message);
+    // setMessage(data.message);
     if (data.success) {
+      localStorage.setItem("user", JSON.stringify(data));
       setUser({
         id: data.user.id,
         username: data.user.username,
       });
     }
+
+    if (data.success) {
+      console.log("succcc");
+      router.push("/home");
+    }
     setUsername("");
     setPassword("");
   }
 
-  if (user) {
-    router.push("/home");
-  }
-
   const handleUser = () => {
-    setShowMessage(true);
-    setInterval(() => {
-      setShowMessage(false);
-    }, 2000);
+    // setShowMessage(true);
+    // setInterval(() => {
+    // setShowMessage(false);
+    // }, 2000);
   };
 
   const handleNavigate = () => {
@@ -68,8 +70,15 @@ export default function LoginPage() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-around items-center p-10 w-full bg-white rounded-lg"
-            style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.25)" }}
+            className={`flex flex-col justify-around items-center p-10 w-full  rounded-lg ${
+              theme === "light" ? "bg-white" : "bg-black "
+            }`}
+            style={{
+              boxShadow:
+                theme === "light"
+                  ? "0 0 20px rgba(0, 0, 0, 0.25)"
+                  : "0 0 20px rgba(255, 255, 255, 0.25)",
+            }}
           >
             <div className="flex flex-row justify-center items-center  ">
               <h1 className="text-2xl mr-2">Login</h1>

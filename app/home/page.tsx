@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import { useUser } from "../context/User";
 import Jobs from "../components/JobsList";
 import JobModal from "../components/jobModal";
+import { useTheme } from "../context/Theme";
 
 type JobData = {
   app_user_id: number;
@@ -19,6 +20,7 @@ type JobData = {
 
 export default function HomePage() {
   const { user, setUser } = useUser();
+  const { theme } = useTheme();
   const [jobData, setJobData] = useState<JobData[] | []>();
   const [search, setSearch] = useState("");
   const [modal, setModal] = useState(false);
@@ -58,10 +60,17 @@ export default function HomePage() {
       {modal && <JobModal toggleModal={toggleModal} modal={modal}></JobModal>}
       <div className=" h-screen w-full  ">
         <div className="flex flex-col w-full justify-center items-center p-3">
-          <label htmlFor="">Search from applied jobs: {search}</label>
+          {/* <label htmlFor="">Search from applied jobs: {search}</label> */}
           <input
-            className="w-3/5 max-w-[600px] h-10 rounded-lg border-2 border-neutral-500"
-            placeholder="Search for jobs"
+            className={` w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 `}
+            style={{
+              boxShadow:
+                theme === "light"
+                  ? "0 1px 4px rgba(0, 0, 0, 0.48)"
+                  : "1px 1px 1px 1px rgba(255, 255, 255, 0.12)",
+              backgroundColor: "rgba(255, 255, 255, 0.12)",
+            }}
+            placeholder="Search from applied jobs..."
             onChange={(e) => setSearch(e.target.value)}
             value={search}
           ></input>

@@ -5,6 +5,7 @@ import { LogoutButton } from "../components/LogoutButton";
 import Navbar from "../components/Navbar";
 import { useUser } from "../context/User";
 import Jobs from "../components/JobsList";
+import JobModal from "../components/jobModal";
 
 type JobData = {
   app_user_id: number;
@@ -20,16 +21,9 @@ export default function HomePage() {
   const { user, setUser } = useUser();
   const [jobData, setJobData] = useState<JobData[] | []>();
   const [search, setSearch] = useState("");
-
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal);
   const userId = user?.id;
-  // hae local stroagesta käyttäjän tiedot
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("user");
-  //   if (storedUser) {
-  //     const parsed = JSON.parse(storedUser);
-  //     setUser({ id: parsed.user.id, username: parsed.user.username });
-  //   }
-  // }, []);
 
   useEffect(() => {
     const get = async () => {
@@ -61,6 +55,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar></Navbar>
+      {modal && <JobModal toggleModal={toggleModal} modal={modal}></JobModal>}
       <div className=" h-screen w-full  ">
         <div className="flex flex-col w-full justify-center items-center p-3">
           <label htmlFor="">Search from applied jobs: {search}</label>
@@ -74,7 +69,10 @@ export default function HomePage() {
         <div className="flex w-full justify-center">
           <div className="flex w-4/5 justify-between  items-center mb-5">
             <h1 className="text-2xl w-fit ">APPLIED JOBS</h1>
-            <button className="text-md p-3 bg-blue-500 rounded-md text-white text-center">
+            <button
+              className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"
+              onClick={() => toggleModal()}
+            >
               Add job
             </button>
           </div>

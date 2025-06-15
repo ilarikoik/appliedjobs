@@ -2,6 +2,7 @@
 
 import { useTheme } from "../context/Theme";
 import { formatDate } from "../utils/formatDate";
+import getRightIcon from "../utils/jobStatusIcon";
 
 type JobData = {
   app_user_id: number;
@@ -26,9 +27,10 @@ export default function Jobs({ jobData }: JobsListProps) {
       {jobData.length === 0 ? (
         <p>Ei hakemusia</p>
       ) : (
-        jobData.map((item) => {
+        jobData.map((item, index) => {
           return (
             <div
+              key={index}
               className={` w-4/5 max-w-[1100px] h-fit p-5 border-2 mb-10 rounded-lg ${
                 theme === "light" ? "border-neutral-200" : "border-neutral-900"
               } `}
@@ -41,7 +43,7 @@ export default function Jobs({ jobData }: JobsListProps) {
               <p>📍 {item.job_location}</p>
               <p>📅 {formatDate(item.job_applied_date.toString())}</p>
               <div className="flex w-full flex-col sm:flex-row sm:justify-between">
-                <p>❌ {item.job_status}</p>
+                <p>{getRightIcon(item.job_status) + item.job_status}</p>
                 <a
                   target="_blank"
                   href={item.job_link}

@@ -15,7 +15,7 @@ export function LogoutButton() {
         location.reload();
       }}
       // onClick={() => setUser(null)}
-      className=" w-fit p-3 h-8 rounded-md  flex items-center justify-center bg-red-500"
+      className=" w-fit p-3 h-8 rounded-md  flex items-center justify-center bg-red-500 hover:cursor-pointer"
     >
       Logout
     </button>

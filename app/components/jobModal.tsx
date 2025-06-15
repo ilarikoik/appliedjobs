@@ -7,6 +7,14 @@ type modalProps = {
 };
 export default function JobModal({ modal, toggleModal }: modalProps) {
   const { theme } = useTheme();
+  const [role, setRole] = useState("");
+  const [company, setCompany] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState(
+    new Date().toLocaleDateString().substring(0, 10)
+  );
+  const [link, setLink] = useState("");
+  const [status, setStatus] = useState("");
 
   const closeModal = () => {
     toggleModal();
@@ -71,6 +79,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           <input
             placeholder="15-05-2025"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            value={date.toString()}
           ></input>
           <label
             className={`${
@@ -94,14 +103,19 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="No answer / Answered / Interview / Decline / Job offer"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
           ></input>
-          <div className="flex flex-row justify-between w-4/5">
+          <div className="flex flex-row justify-between w-4/5 gap-4 mt-4">
             <button
-              className={`w-2/8 p-3 rounded-lg bg-red-500`}
+              type="button"
               onClick={closeModal}
+              className="w-1/3 px-4 py-3 rounded-xl text-red-400 font-semibold  hover:bg-red-600 hover:text-white transition duration-200 active:scale-95 hover:cursor-pointer"
             >
               Close
             </button>
-            <button className={`w-5/8 p-3 rounded-lg bg-blue-500`}>
+
+            <button
+              type="submit"
+              className="w-1/2 px-4 py-3 rounded-xl text-blue-500 font-semibold  hover:bg-blue-600 hover:text-white transition duration-200 active:scale-95 hover:cursor-pointer"
+            >
               Add job
             </button>
           </div>

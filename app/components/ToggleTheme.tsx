@@ -7,7 +7,7 @@ export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button onClick={toggleTheme} className=" w-fit">
+    <button onClick={toggleTheme} className=" w-fit hover:cursor-pointer">
       <p className="text-lg">
         {theme === "light" ? "Dark mode 🌑" : "Light mode 🌞"}
       </p>

@@ -16,12 +16,12 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
     toggleModal();
   };
   return (
-    <div className="w-full h-screen top-0 absolute bg-white/10 backdrop-blur-sm justify-center items-center flex">
+    <div className="w-full h-screen top-0 absolute backdrop-blur-sm justify-center items-center flex ">
       <div
-        className={` w-4/5 max-w-[800px] h-fit p-10 rounded-lg ${
+        className={` w-4/5 max-w-[800px] h-fit p-10 rounded-lg shadow-2xl  ${
           theme === "light"
-            ? "bg-white shadow-2xl shadow-black"
-            : "bg-black shadow-2xl shadow-white"
+            ? " text-black shadow-black border border-neutral-300"
+            : " text-black shadow-black border border-neutral-600"
         }`}
       >
         <form
@@ -37,7 +37,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           </label>
           <input
             placeholder="Junior Developer"
-            className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2 "
           ></input>
           <label
             className={`${

@@ -24,6 +24,7 @@ export default function HomePage() {
   const [jobData, setJobData] = useState<JobData[] | []>();
   const [search, setSearch] = useState("");
   const [modal, setModal] = useState(false);
+  const [showGrid, setShowGrid] = useState(true);
   const toggleModal = () => setModal(!modal);
   const userId = user?.id;
 
@@ -62,7 +63,7 @@ export default function HomePage() {
         <div className="flex flex-col w-full  justify-center items-center p-3">
           {/* <label htmlFor="">Search from applied jobs: {search}</label> */}
           <input
-            className={` w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 `}
+            className={` w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 outline-none`}
             style={{
               boxShadow:
                 theme === "light"
@@ -77,7 +78,16 @@ export default function HomePage() {
         </div>
         <div className="flex w-full justify-center">
           <div className="flex w-4/5 max-w-[1000px] justify-between  items-center mb-5">
-            <h1 className="text-2xl w-fit ">APPLIED JOBS</h1>
+            <div className="flex flex-row justify-center items-center">
+              <button
+                className="hover:cursor-pointer text-xl px-4 py-2 "
+                onClick={() => setShowGrid(!showGrid)}
+              >
+                {showGrid ? "☰" : ":::"}
+              </button>
+
+              <h1 className="text-2xl w-fit">APPLIED JOBS</h1>
+            </div>
             <button
               className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"
               onClick={() => toggleModal()}

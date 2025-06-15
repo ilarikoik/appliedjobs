@@ -11,25 +11,29 @@ export default function Navbar() {
       <div
         className={`${
           theme === "light" ? "shadow-gray-400" : "shadow-gray-800"
-        }  flex w-full h-16 p-3 items-center justify-between shadow-lg sm:hidden `}
+        }  flex w-full  h-16 p-3 items-center justify-between shadow-lg sm:hidden `}
       >
         <ThemeToggle></ThemeToggle>
         <LogoutButton></LogoutButton>
       </div>
       <div
-        className={`${
+        className={` ${
           theme === "light" ? "shadow-gray-400" : "shadow-gray-800"
-        } hidden sm:flex w-full h-20 justify-end shadow-lg `}
+        } hidden sm:flex w-full justify-center shadow-2xl`}
       >
         <div
-          className={`flex w-full ml-10 justify-start items-center font-alumni`}
+          className={` hidden sm:flex w-full h-20 justify-end max-w-[1500px]`}
         >
-          <h1 className={` text-xl font-bold `}>HOMMAA-TYÖ</h1>
+          <div
+            className={`flex w-full ml-10 justify-start items-center font-alumni`}
+          >
+            <h1 className={` text-xl font-bold `}>HOMMAA-TYÖ</h1>
+          </div>
+          <ul className="flex  justify-around items-center w-2/5 max-w-[400px] ">
+            <ThemeToggle></ThemeToggle>
+            <LogoutButton></LogoutButton>
+          </ul>
         </div>
-        <ul className="flex  justify-around items-center w-2/5 max-w-[400px] ">
-          <ThemeToggle></ThemeToggle>
-          <LogoutButton></LogoutButton>
-        </ul>
       </div>
     </>
   );

@@ -30,7 +30,7 @@ export default function Jobs({ jobData }: JobsListProps) {
           return (
             <div
               className={` w-4/5 max-w-[1100px] h-fit p-5 border-2 mb-10 rounded-lg ${
-                theme === "light" ? "border-neutral-200" : "border-neutral-700"
+                theme === "light" ? "border-neutral-200" : "border-neutral-900"
               } `}
             >
               <div className="flex justify-between items-center">

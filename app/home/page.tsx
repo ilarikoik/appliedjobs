@@ -59,7 +59,7 @@ export default function HomePage() {
       <Navbar></Navbar>
       {modal && <JobModal toggleModal={toggleModal} modal={modal}></JobModal>}
       <div className=" h-screen w-full  ">
-        <div className="flex flex-col w-full justify-center items-center p-3">
+        <div className="flex flex-col w-full  justify-center items-center p-3">
           {/* <label htmlFor="">Search from applied jobs: {search}</label> */}
           <input
             className={` w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 `}
@@ -76,7 +76,7 @@ export default function HomePage() {
           ></input>
         </div>
         <div className="flex w-full justify-center">
-          <div className="flex w-4/5 justify-between  items-center mb-5">
+          <div className="flex w-4/5 max-w-[1000px] justify-between  items-center mb-5">
             <h1 className="text-2xl w-fit ">APPLIED JOBS</h1>
             <button
               className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"

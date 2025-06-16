@@ -140,12 +140,6 @@ export default function HomePage() {
             >
               Add job
             </button>
-            <button
-              className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"
-              onClick={() => console.log(edit)}
-            >
-              Editjob
-            </button>
           </div>
         </div>
         {jobData && !showGrid ? (

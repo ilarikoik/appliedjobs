@@ -16,9 +16,15 @@ type JobData = {
 
 type JobsListProps = {
   jobData: JobData[];
+  setEditItem: (jobData: JobData) => void;
+  toggleModal: () => void;
 };
 
-export default function Jobs({ jobData }: JobsListProps) {
+export default function Jobs({
+  jobData,
+  setEditItem,
+  toggleModal,
+}: JobsListProps) {
   const { theme } = useTheme();
 
   return (
@@ -36,7 +42,15 @@ export default function Jobs({ jobData }: JobsListProps) {
             >
               <div className="flex justify-between items-center">
                 <h1 className="text-xl">{item.job_role.toUpperCase()}</h1>
-                <p className="text-blue-500 hover:cursor-pointer">✏️Edit</p>
+                <p
+                  className="text-blue-500 hover:cursor-pointer"
+                  onClick={() => {
+                    setEditItem(item);
+                    toggleModal();
+                  }}
+                >
+                  ✏️Edit
+                </p>
               </div>
               <p>🏢 {item.job_employee}</p>
               <p>📍 {item.job_location}</p>

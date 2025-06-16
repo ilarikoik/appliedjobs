@@ -34,7 +34,9 @@ export async function POST(request: Request) {
     const res = await db
       .request()
       .input("id", id)
-      .query("SELECT * FROM jobs_applied WHERE app_user_id = @id");
+      .query(
+        "SELECT * FROM jobs_applied WHERE app_user_id = @id ORDER BY  job_applied_date DESC"
+      );
 
     if (res) {
       return NextResponse.json({

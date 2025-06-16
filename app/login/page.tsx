@@ -98,7 +98,7 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
-                type="text"
+                type="password"
                 placeholder="password"
                 className="w-3/5 min-w-[200px] h-12 bg-gray-200 rounded-md text-start p-3 text-black "
                 onChange={(e) => setPassword(e.target.value)}

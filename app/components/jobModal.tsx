@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "../context/Theme";
 import { useUser } from "../context/User";
+
+type JobData = {
+  id?: number;
+  userId: number;
+  role: string;
+  company: string;
+  location: string;
+  date: string;
+  link: string;
+  status: string;
+};
 
 type modalProps = {
   modal: boolean;
   toggleModal: () => void;
+  editData?: JobData | null;
 };
-export default function JobModal({ modal, toggleModal }: modalProps) {
+export default function JobModal({ modal, editData, toggleModal }: modalProps) {
   const { theme } = useTheme();
   const { user } = useUser();
   const userId = user?.id;
@@ -23,10 +35,31 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
     toggleModal();
   };
 
+  useEffect(() => {
+    console.log(JSON.stringify(editData) + "asdasdads");
+    if (editData) {
+      setRole(editData.role);
+      setCompany(editData.company);
+      setLocation(editData.location);
+      setDate(editData.date);
+      setLink(editData.link);
+      setStatus(editData.status);
+    } else {
+      setRole("");
+      setCompany("");
+      setLocation("");
+      setDate(new Date().toISOString().substring(0, 10));
+      setLink("");
+      setStatus("Sent");
+    }
+  }, [editData, modal]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    let res;
+    //
     if (role && userId) {
-      const jobApplied = {
+      const jobApplied: JobData = {
         userId,
         role,
         company,
@@ -35,15 +68,25 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
         link,
         status,
       };
-      // console.log(JSON.stringify(jobApplied) + "-------------------");
-      const res = await fetch("/api/postjob", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(jobApplied),
-      });
+
+      // jos propsina tulee data niin PUT muuten POST(uusi)
+      if (editData?.id) {
+        res = await fetch("/api/editjob", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...jobApplied, postId: editData?.id }),
+        });
+      } else {
+        res = await fetch("/api/postjob", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jobApplied),
+        });
+      }
       const data = await res.json();
+      console.log(data);
+      toggleModal();
     }
-    toggleModal();
   }
   return (
     <div className="w-full min-h-screen top-0 absolute backdrop-blur-sm justify-center items-center flex ">
@@ -58,6 +101,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           onSubmit={handleSubmit}
           className=" flex justify-center items-center flex-col "
         >
+          {editData?.id}
           <label
             className={`${
               theme === "light" ? "text-black" : "text-white"
@@ -69,6 +113,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="Junior Developer"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2 "
             onChange={(e) => setRole(e.target.value)}
+            value={role}
           ></input>
           <label
             className={`${
@@ -81,6 +126,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="Dev Oy"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
             onChange={(e) => setCompany(e.target.value)}
+            value={company}
           ></input>
           <label
             className={`${
@@ -93,6 +139,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="Helsinki"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
             onChange={(e) => setLocation(e.target.value)}
+            value={location}
           ></input>
           <label
             className={`${
@@ -118,6 +165,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="example.com/28212300"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
             onChange={(e) => setLink(e.target.value)}
+            value={link}
           ></input>
           <label
             className={`${

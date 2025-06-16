@@ -11,6 +11,7 @@ import { formatDate } from "../utils/formatDate";
 import getRightIcon from "../utils/jobStatusIcon";
 
 type JobData = {
+  id?: number;
   app_user_id: number;
   job_role: string;
   job_employee: string;
@@ -24,6 +25,7 @@ export default function HomePage() {
   const { user, setUser } = useUser();
   const { theme } = useTheme();
   const [jobData, setJobData] = useState<JobData[] | []>();
+  const [editItem, setEditItem] = useState<any>();
   const [search, setSearch] = useState("");
   const [modal, setModal] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -57,15 +59,45 @@ export default function HomePage() {
         .includes(search.toLowerCase())
   );
 
+  // if (editItem) {
+  //   const edit = {
+  //     id: editItem.id,
+  //     userId: editItem.app_user_id,
+  //     role: editItem.job_role,
+  //     company: editItem.job_employee,
+  //     location: editItem.job_location,
+  //     date: editItem.job_applied_date,
+  //     link: editItem.job_link,
+  //     status: editItem.job_status,
+  //   };
+  //   setEditItem(edit);
+  // }
+
+  const edit = editItem && {
+    id: editItem.id,
+    userId: editItem.app_user_id,
+    role: editItem.job_role,
+    company: editItem.job_employee,
+    location: editItem.job_location,
+    date: editItem.job_applied_date,
+    link: editItem.job_link,
+    status: editItem.job_status,
+  };
   return (
     <>
       <Navbar></Navbar>
-      {modal && <JobModal toggleModal={toggleModal} modal={modal}></JobModal>}
+      {modal && (
+        <JobModal
+          toggleModal={toggleModal}
+          modal={modal}
+          editData={edit}
+        ></JobModal>
+      )}
       <div className=" h-screen w-full  ">
-        <div className="flex flex-col w-full  justify-center items-center p-3">
+        <div className="flex  w-full  justify-center items-center p-3">
           {/* <label htmlFor="">Search from applied jobs: {search}</label> */}
-          <input
-            className={` w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 outline-none`}
+          <div
+            className={`flex flex-row justify-between w-3/5 max-w-[600px] h-10 mt-5 rounded-lg p-2 `}
             style={{
               boxShadow:
                 theme === "light"
@@ -73,10 +105,20 @@ export default function HomePage() {
                   : "1px 1px 1px 1px rgba(255, 255, 255, 0.12)",
               backgroundColor: "rgba(255, 255, 255, 0.12)",
             }}
-            placeholder="Search from applied jobs..."
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-          ></input>
+          >
+            <input
+              className="outline-none w-full"
+              placeholder="Search from applied jobs..."
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            ></input>
+            <p
+              className="hover:cursor-pointer ml-3"
+              onClick={() => setSearch("")}
+            >
+              🗙
+            </p>
+          </div>
         </div>
         <div className="flex w-full justify-center">
           <div className="flex w-4/5 max-w-[1000px] justify-between  items-center mb-5">
@@ -98,43 +140,62 @@ export default function HomePage() {
             >
               Add job
             </button>
+            <button
+              className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"
+              onClick={() => console.log(edit)}
+            >
+              Editjob
+            </button>
           </div>
         </div>
-        {jobData && !showGrid && <Jobs jobData={filtered || []}></Jobs>}
-        <div>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filtered?.map((item, index) => (
-              <div
-                key={index}
-                className={`w-full h-fit p-5 border-2 rounded-lg ${
-                  theme === "light"
-                    ? "border-neutral-200"
-                    : "border-neutral-900"
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <h1 className="text-xl">{item.job_role.toUpperCase()}</h1>
-                  <p className="text-blue-500 hover:cursor-pointer">✏️ Edit</p>
+        {jobData && !showGrid ? (
+          <Jobs
+            jobData={filtered || []}
+            setEditItem={setEditItem}
+            toggleModal={toggleModal}
+          ></Jobs>
+        ) : (
+          <div>
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 p-3">
+              {filtered?.map((item, index) => (
+                <div
+                  key={index}
+                  className={`w-full h-fit p-5 border-2 rounded-lg ${
+                    theme === "light"
+                      ? "border-neutral-200"
+                      : "border-neutral-900"
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <h1 className="text-xl">{item.job_role.toUpperCase()}</h1>
+                    <p
+                      className="text-blue-500 hover:cursor-pointer"
+                      onClick={() => {
+                        setEditItem(item);
+                        toggleModal();
+                      }}
+                    >
+                      ✏️ Edit
+                    </p>
+                  </div>
+                  <p>🏢 {item.job_employee}</p>
+                  <p>📍 {item.job_location}</p>
+                  <p>📅 {formatDate(item.job_applied_date.toString())}</p>
+                  <div className="flex w-full flex-col sm:flex-row sm:justify-between">
+                    <p>{getRightIcon(item.job_status) + item.job_status}</p>
+                    <a
+                      target="_blank"
+                      href={item.job_link}
+                      className="text-blue-500"
+                    >
+                      🔗 Open link
+                    </a>
+                  </div>
                 </div>
-                <p>🏢 {item.job_employee}</p>
-                <p>📍 {item.job_location}</p>
-                <p>📅 {formatDate(item.job_applied_date.toString())}</p>
-                <div className="flex w-full flex-col sm:flex-row sm:justify-between">
-                  <p>{getRightIcon(item.job_status) + item.job_status}</p>
-                  <a
-                    target="_blank"
-                    href={item.job_link}
-                    className="text-blue-500"
-                  >
-                    🔗 Open link
-                  </a>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div className="flex justify-center items-center w-5/6 h-3/6  p-3 max-w-[900px]"></div>
+        )}
       </div>
     </>
   );

@@ -89,11 +89,11 @@ export default function JobModal({ modal, editData, toggleModal }: modalProps) {
     }
   }
   return (
-    <div className="w-full min-h-screen top-0 absolute backdrop-blur-sm justify-center items-center flex ">
+    <div className="w-full min-h-screen  absolute backdrop-blur-sm justify-center items-center flex ">
       <div
         className={` w-4/5 max-w-[800px] h-fit p-10 rounded-lg shadow-2xl  ${
           theme === "light"
-            ? " text-black shadow-black border border-neutral-300"
+            ? " text-black shadow-black border border-neutral-200 bg-white"
             : " text-black shadow-black border border-neutral-600"
         }`}
       >
@@ -101,7 +101,6 @@ export default function JobModal({ modal, editData, toggleModal }: modalProps) {
           onSubmit={handleSubmit}
           className=" flex justify-center items-center flex-col "
         >
-          {editData?.id}
           <label
             className={`${
               theme === "light" ? "text-black" : "text-white"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "../context/Theme";
+import { useUser } from "../context/User";
 
 type modalProps = {
   modal: boolean;
@@ -7,24 +8,45 @@ type modalProps = {
 };
 export default function JobModal({ modal, toggleModal }: modalProps) {
   const { theme } = useTheme();
+  const { user } = useUser();
+  const userId = user?.id;
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState(
-    new Date().toLocaleDateString().substring(0, 10)
+    new Date().toISOString().substring(0, 10).toString()
   );
   const [link, setLink] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("Sent");
 
   const closeModal = () => {
     toggleModal();
   };
 
-  const handleSubmit = () => {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (role && userId) {
+      const jobApplied = {
+        userId,
+        role,
+        company,
+        location,
+        date,
+        link,
+        status,
+      };
+      // console.log(JSON.stringify(jobApplied) + "-------------------");
+      const res = await fetch("/api/postjob", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jobApplied),
+      });
+      const data = await res.json();
+    }
     toggleModal();
-  };
+  }
   return (
-    <div className="w-full h-screen top-0 absolute backdrop-blur-sm justify-center items-center flex ">
+    <div className="w-full min-h-screen top-0 absolute backdrop-blur-sm justify-center items-center flex ">
       <div
         className={` w-4/5 max-w-[800px] h-fit p-10 rounded-lg shadow-2xl  ${
           theme === "light"
@@ -46,6 +68,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           <input
             placeholder="Junior Developer"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2 "
+            onChange={(e) => setRole(e.target.value)}
           ></input>
           <label
             className={`${
@@ -57,6 +80,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           <input
             placeholder="Dev Oy"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            onChange={(e) => setCompany(e.target.value)}
           ></input>
           <label
             className={`${
@@ -68,6 +92,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           <input
             placeholder="Helsinki"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            onChange={(e) => setLocation(e.target.value)}
           ></input>
           <label
             className={`${
@@ -80,6 +105,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
             placeholder="15-05-2025"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
             value={date.toString()}
+            onChange={(e) => setDate(e.target.value)}
           ></input>
           <label
             className={`${
@@ -91,6 +117,7 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           <input
             placeholder="example.com/28212300"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            onChange={(e) => setLink(e.target.value)}
           ></input>
           <label
             className={`${
@@ -99,10 +126,22 @@ export default function JobModal({ modal, toggleModal }: modalProps) {
           >
             Status:
           </label>
-          <input
+          <select
+            className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="Sent">Sent</option>
+            <option value="Answered">Answered</option>
+            <option value="No answer">No answer</option>
+            <option value="Interview">Interview</option>
+            <option value="Job offer">Job offer</option>
+            <option value="Decline">Decline</option>
+          </select>
+          {/* <input
             placeholder="No answer / Answered / Interview / Decline / Job offer"
             className="w-5/6 rounded-md bg-neutral-300 mb-4 p-2"
-          ></input>
+          ></input> */}
           <div className="flex flex-row justify-between w-4/5 gap-4 mt-4">
             <button
               type="button"

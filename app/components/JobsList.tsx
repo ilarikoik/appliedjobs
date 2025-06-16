@@ -21,7 +21,6 @@ type JobsListProps = {
 export default function Jobs({ jobData }: JobsListProps) {
   const { theme } = useTheme();
 
-  console.log(JSON.stringify(jobData) + "jobbbdata");
   return (
     <div className="w-full flex justify-center items-center flex-col ">
       {jobData.length === 0 ? (

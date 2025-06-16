@@ -36,11 +36,11 @@ export default function HomePage() {
         body: JSON.stringify({ id: userId }),
       });
       const res = await data.json();
-      console.log(res.jobs_applied[0]);
+      // console.log(res.jobs_applied[0]);
       setJobData(res.jobs_applied[0]);
     };
     get();
-  }, [user]);
+  }, [user, modal]);
 
   const filtered = jobData?.filter(
     (item: JobData) =>
@@ -86,7 +86,9 @@ export default function HomePage() {
                 {showGrid ? "☰" : ":::"}
               </button>
 
-              <h1 className="text-2xl w-fit">APPLIED JOBS</h1>
+              <h1 className="text-2xl w-fit">
+                APPLIED JOBS {"(" + filtered?.length + ")"}
+              </h1>
             </div>
             <button
               className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"

@@ -1,9 +1,14 @@
 export default function getRightIcon(status: string) {
   let icon = "";
   switch (status) {
+    case "Sent":
+      icon = "✔️";
+      break;
+    case "ei_vastattu":
     case "No answer":
       icon = "⏳";
       break;
+    case "haastattelu":
     case "Interview":
       icon = "🧑‍💼";
       break;
@@ -16,12 +21,8 @@ export default function getRightIcon(status: string) {
     case "Job offer":
       icon = "💼";
       break;
-    case "ei_vastattu":
-      icon = "⏳";
-      break;
-    case "haastattelu":
-      icon = "🧑‍💼";
-      break;
+    default:
+      icon = "✔️";
   }
   return icon;
 }

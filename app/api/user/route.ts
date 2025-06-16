@@ -30,7 +30,6 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const { username, user_password } = await request.json();
-
     const db = await getConnection();
     await db
       .request()

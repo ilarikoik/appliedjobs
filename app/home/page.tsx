@@ -7,6 +7,8 @@ import { useUser } from "../context/User";
 import Jobs from "../components/JobsList";
 import JobModal from "../components/jobModal";
 import { useTheme } from "../context/Theme";
+import { formatDate } from "../utils/formatDate";
+import getRightIcon from "../utils/jobStatusIcon";
 
 type JobData = {
   app_user_id: number;
@@ -24,7 +26,7 @@ export default function HomePage() {
   const [jobData, setJobData] = useState<JobData[] | []>();
   const [search, setSearch] = useState("");
   const [modal, setModal] = useState(false);
-  const [showGrid, setShowGrid] = useState(true);
+  const [showGrid, setShowGrid] = useState(false);
   const toggleModal = () => setModal(!modal);
   const userId = user?.id;
 
@@ -98,7 +100,40 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-        {jobData && <Jobs jobData={filtered || []}></Jobs>}
+        {jobData && !showGrid && <Jobs jobData={filtered || []}></Jobs>}
+        <div>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filtered?.map((item, index) => (
+              <div
+                key={index}
+                className={`w-full h-fit p-5 border-2 rounded-lg ${
+                  theme === "light"
+                    ? "border-neutral-200"
+                    : "border-neutral-900"
+                }`}
+              >
+                <div className="flex justify-between items-center">
+                  <h1 className="text-xl">{item.job_role.toUpperCase()}</h1>
+                  <p className="text-blue-500 hover:cursor-pointer">✏️ Edit</p>
+                </div>
+                <p>🏢 {item.job_employee}</p>
+                <p>📍 {item.job_location}</p>
+                <p>📅 {formatDate(item.job_applied_date.toString())}</p>
+                <div className="flex w-full flex-col sm:flex-row sm:justify-between">
+                  <p>{getRightIcon(item.job_status) + item.job_status}</p>
+                  <a
+                    target="_blank"
+                    href={item.job_link}
+                    className="text-blue-500"
+                  >
+                    🔗 Open link
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="flex justify-center items-center w-5/6 h-3/6  p-3 max-w-[900px]"></div>
       </div>
     </>

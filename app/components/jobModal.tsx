@@ -93,7 +93,7 @@ export default function JobModal({ modal, editData, toggleModal }: modalProps) {
         className={` w-4/5 max-w-[800px] h-fit p-10 rounded-lg shadow-2xl  ${
           theme === "light"
             ? " text-black shadow-black border border-neutral-200 bg-white"
-            : " text-black shadow-black border border-neutral-600"
+            : " text-black shadow-black border border-neutral-600 bg-black"
         }`}
       >
         <form

@@ -29,9 +29,9 @@ export default function Navbar() {
           <div
             className={`flex w-full ml-10 justify-start items-center font-alumni`}
           >
-            <h1 className={` text-xl font-bold `}>Get a Job</h1>
+            <h1 className={` text-xl font-bold mr-1`}>Get a Job, </h1>
             <p className={` text-lg font-bold text-blue-500 `}>
-              {user && ", " + user.username}
+              {user && user.username}
             </p>
           </div>
           <ul className="flex  justify-around items-center w-2/5 max-w-[400px] ">

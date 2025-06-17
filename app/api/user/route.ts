@@ -1,5 +1,6 @@
 import { getConnection } from "@/app/lib/db";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
 // export async function GET(request: Request) {
 //   try {
@@ -30,11 +31,12 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const { username, user_password } = await request.json();
+    const hashedPassword = await bcrypt.hash(user_password, 10);
     const db = await getConnection();
     await db
       .request()
       .input("username", username)
-      .input("user_password", user_password)
+      .input("user_password", hashedPassword)
       .query(
         "INSERT INTO app_user (username, user_password) VALUES (@username, @user_password)"
       );

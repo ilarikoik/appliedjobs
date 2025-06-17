@@ -30,6 +30,7 @@
 
 import { getConnection } from "@/app/lib/db";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
   try {
@@ -47,22 +48,27 @@ export async function POST(request: Request) {
       .request()
       .input("username", username)
       .input("password", password)
-      .query(
-        "SELECT * FROM app_user WHERE username = @username AND user_password = @password"
-      );
+      .query("SELECT * FROM app_user WHERE username = @username");
 
-    if (res.recordset.length > 0) {
-      return NextResponse.json({
-        success: true,
-        message: "Login successful",
-        user: res.recordset[0],
-      });
+    const user = res.recordset[0];
+
+    const isMatch = await bcrypt.compare(password, user.user_password); //perjaatteessa hashaa passwordin ja kattoo tulisko sama cryptattu string
+
+    if (!isMatch) {
+      return NextResponse.json(
+        { success: false, message: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
-    return NextResponse.json(
-      { success: false, message: "Invalid credentials" },
-      { status: 401 }
-    );
+    return NextResponse.json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user.id,
+        username: user.username,
+      },
+    });
   } catch (err) {
     console.error("Login error:", err);
     return NextResponse.json(

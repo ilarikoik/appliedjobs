@@ -22,7 +22,7 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: username, user_password: password }),
     });
-    router.push("/home");
+    router.push("/login");
   }
 
   return (

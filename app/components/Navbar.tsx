@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useTheme } from "../context/Theme";
 import { LogoutButton } from "./LogoutButton";
 import { ThemeToggle } from "./ToggleTheme";
+import { useUser } from "../context/User";
 
 export default function Navbar() {
   const { theme } = useTheme();
+  const { user } = useUser();
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -27,7 +29,10 @@ export default function Navbar() {
           <div
             className={`flex w-full ml-10 justify-start items-center font-alumni`}
           >
-            <h1 className={` text-xl font-bold `}>HOMMAA-TYÖ</h1>
+            <h1 className={` text-xl font-bold `}>Get a Job</h1>
+            <p className={` text-lg font-bold text-blue-500 `}>
+              {user && ", " + user.username}
+            </p>
           </div>
           <ul className="flex  justify-around items-center w-2/5 max-w-[400px] ">
             <ThemeToggle></ThemeToggle>

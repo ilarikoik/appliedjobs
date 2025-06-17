@@ -36,7 +36,6 @@ export default function JobModal({ modal, editData, toggleModal }: modalProps) {
   };
 
   useEffect(() => {
-    console.log(JSON.stringify(editData) + "asdasdads");
     if (editData) {
       setRole(editData.role);
       setCompany(editData.company);
@@ -202,7 +201,7 @@ export default function JobModal({ modal, editData, toggleModal }: modalProps) {
               type="submit"
               className="w-1/2 px-4 py-3 rounded-xl text-blue-500 font-semibold  hover:bg-blue-600 hover:text-white transition duration-200 active:scale-95 hover:cursor-pointer"
             >
-              Add job
+              OK
             </button>
           </div>
         </form>

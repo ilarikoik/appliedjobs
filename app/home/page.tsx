@@ -59,21 +59,7 @@ export default function HomePage() {
         .includes(search.toLowerCase())
   );
 
-  // if (editItem) {
-  //   const edit = {
-  //     id: editItem.id,
-  //     userId: editItem.app_user_id,
-  //     role: editItem.job_role,
-  //     company: editItem.job_employee,
-  //     location: editItem.job_location,
-  //     date: editItem.job_applied_date,
-  //     link: editItem.job_link,
-  //     status: editItem.job_status,
-  //   };
-  //   setEditItem(edit);
-  // }
-
-  const edit = editItem && {
+  let edit = editItem && {
     id: editItem.id,
     userId: editItem.app_user_id,
     role: editItem.job_role,
@@ -83,6 +69,12 @@ export default function HomePage() {
     link: editItem.job_link,
     status: editItem.job_status,
   };
+
+  const handleAdd = () => {
+    toggleModal();
+    setEditItem(null);
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -136,7 +128,7 @@ export default function HomePage() {
             </div>
             <button
               className="text-md p-3 bg-blue-500 rounded-md text-white text-center hover:cursor-pointer"
-              onClick={() => toggleModal()}
+              onClick={handleAdd}
             >
               Add job
             </button>

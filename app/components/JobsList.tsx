@@ -30,7 +30,7 @@ export default function Jobs({
   return (
     <div className="w-full flex justify-center items-center flex-col ">
       {jobData.length === 0 ? (
-        <p>Ei hakemusia</p>
+        <p></p>
       ) : (
         jobData.map((item, index) => {
           return (

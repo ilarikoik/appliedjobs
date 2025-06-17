@@ -9,7 +9,7 @@ Tämä on Next.js-pohjainen web-sovellus, jonka avulla käyttäjät voivat seura
 
 - [Next.js](https://nextjs.org/)
 - [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/) (valinnainen, jos käytössä)
+- [TypeScript](https://www.typescriptlang.org/) 
 - [SQL Server](https://www.microsoft.com/en-us/sql-server)
   
 ## 🚀 Toiminnot

@@ -19,8 +19,7 @@ Tämä on Next.js-pohjainen web-sovellus, jonka avulla käyttäjät voivat seura
 - Työhakemusten listaaminen, muokkaaminen ja poistaminen
 - SQL Server -tietokanta tietojen tallennukseen
 
-## 🗃️ Tietokantarakenne (esimerkki)
-
+## 🗃️ Tietokantarakenne
 ```sql
 CREATE TABLE app_user (
   id INT PRIMARY KEY IDENTITY,

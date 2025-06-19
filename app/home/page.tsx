@@ -146,7 +146,7 @@ export default function HomePage() {
               {filtered?.map((item, index) => (
                 <div
                   key={index}
-                  className={`w-full h-fit p-5 border-2 rounded-lg ${
+                  className={`w-full h-[220px] p-5 border-2 rounded-lg flex flex-col justify-evenly ${
                     theme === "light"
                       ? "border-neutral-200"
                       : "border-neutral-900"

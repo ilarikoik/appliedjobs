@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       .request()
       .input("id", id)
       .query(
-        "SELECT * FROM jobs_applied WHERE app_user_id = @id ORDER BY  job_applied_date DESC"
+        "SELECT * FROM jobs_applied WHERE app_user_id = @id ORDER BY  id DESC"
       );
 
     if (res) {

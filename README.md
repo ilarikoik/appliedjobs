@@ -1,6 +1,6 @@
 # Työnhaun Seuranta - Web-sovellus
 
-[1 minuutin esittely video](
+[1 minuutin esittely video](https://www.youtube.com/watch?v=FD-V9NmptSc)
 
 Tämä on Next.js-pohjainen web-sovellus, jonka avulla käyttäjät voivat seurata työnhakuprosessiaan. Sovelluksessa voi:
 - Rekisteröityä ja kirjautua sisään
